@@ -50,7 +50,7 @@ class Jsontableify {
 
     if (Array.isArray(obj)) {
       if (Array.isArray(obj[0]) && obj.every(Array.isArray)) { // array of array
-        buf.push('<table>', '<tbody>');
+        buf.push('<table class="table">', '<tbody>');
         cols = [];
 
         obj.forEach((row, ix) => {
@@ -65,14 +65,14 @@ class Jsontableify {
       } else if (typeof obj[0] === 'object') { // array of objects
         const tmpBuf = [];
         let isNodeEmpty = true;
-        tmpBuf.push('<table>', '<tbody>');
+        tmpBuf.push('<table class="table">', '<tbody>');
         tmpBuf.push('<tr><td>');
 
         obj.forEach((o, i) => {
           if (typeof o === 'object' && !Array.isArray(o)) {
             if (i && !isNodeEmpty) tmpBuf.push('<hr/>');
 
-            tmpBuf.push('<table>');
+            tmpBuf.push('<table class="table">');
             Object.keys(o)
               .filter(x => (!this.excludeKeys.includes(x)))
               .forEach((k) => {
@@ -101,7 +101,7 @@ class Jsontableify {
           buf.push(...tmpBuf);
         }
       } else { // array of primitives
-        buf.push('<table>', '<tbody>');
+        buf.push('<table class="table">', '<tbody>');
         cols = [];
 
         obj.forEach((val, ix) => {
@@ -118,7 +118,7 @@ class Jsontableify {
       let isNodeEmpty = true;
 
       if (!columns) {
-        tmpBuf.push('<table>');
+        tmpBuf.push('<table class="table">');
         if (obj.type === 'link') {
           isNodeEmpty = false;
           let files = obj.value;
@@ -127,7 +127,7 @@ class Jsontableify {
             files = [files];
           }
 
-          tmpBuf.push('<td><table>');
+          tmpBuf.push('<td><table class="table">');
 
           // eslint-disable-next-line no-restricted-syntax
           for (const { link, name } of files) {
@@ -153,7 +153,7 @@ class Jsontableify {
                 "<tr class='no-break'><th>",
                 label,
                 '</th>',
-                '<td><table>',
+                '<td><table class="table">',
               );
 
               // eslint-disable-next-line no-restricted-syntax
